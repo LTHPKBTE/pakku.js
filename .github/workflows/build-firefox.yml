@@ -1,0 +1,37 @@
+
+name: Build Firefox Extension
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-firefox:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Firefox extension
+        run: npm run build:firefox
+
+      - name: Upload Unpacked Extension Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firefox-extension-unpacked
+          path: dist/F/
+
+      - name: Upload Zipped Extension Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firefox-extension-zip
+          path: dist/Firefox-pakku.zip
