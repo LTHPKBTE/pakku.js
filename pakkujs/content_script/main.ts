@@ -241,12 +241,16 @@ window.addEventListener('message', async function(event) {
     }
 },false);
 
-//try add getDeletedDanmaku api
-window.addEventListener('pakku:getDeletedDanmaku', async (event) => {
-
+//try add getDeletedDanmaku API
+//fixed for firefox only
+window.addEventListener('pakku:getDeletedDanmaku', (event) => {
     if (!scheduler) {
+        const detail = { error: 'Pakku scheduler尚未准备就绪，请稍后再试。' };
+        
+        const clonedDetail = cloneInto(detail, window, { cloneFunctions: false });
+        
         const errorResponse = new CustomEvent('pakku:deletedDanmakuResponse', {
-            detail: { error: 'Pakku scheduler尚未准备就绪，请稍后再试。' }
+            detail: clonedDetail
         });
         window.dispatchEvent(errorResponse);
         return;
@@ -259,15 +263,22 @@ window.addEventListener('pakku:getDeletedDanmaku', async (event) => {
             throw new Error(`无法生成XML数据，返回类型为 ${typeof resp?.data}`);
         }
 
+        const detail = { data: resp.data };
+
+        const clonedDetail = cloneInto(detail, window, { cloneFunctions: false });
+
         const successResponse = new CustomEvent('pakku:deletedDanmakuResponse', {
-            detail: { data: resp.data }
+            detail: clonedDetail
         });
         window.dispatchEvent(successResponse);
 
     } catch (e: any) {
-
+        const detail = { error: e.message };
+        
+        const clonedDetail = cloneInto(detail, window, { cloneFunctions: false });
+        
         const errorResponse = new CustomEvent('pakku:deletedDanmakuResponse', {
-            detail: { error: e.message }
+            detail: clonedDetail
         });
         window.dispatchEvent(errorResponse);
     }
