@@ -240,3 +240,35 @@ window.addEventListener('message', async function(event) {
         }, event.origin as any);
     }
 },false);
+
+//try add getDeletedDanmaku api
+window.addEventListener('pakku:getDeletedDanmaku', async (event) => {
+
+    if (!scheduler) {
+        const errorResponse = new CustomEvent('pakku:deletedDanmakuResponse', {
+            detail: { error: 'Pakku scheduler尚未准备就绪，请稍后再试。' }
+        });
+        window.dispatchEvent(errorResponse);
+        return;
+    }
+
+    try {
+        const resp = scheduler.dump_result('deleted', { type: 'xml', wait_finished: false });
+
+        if (!resp || typeof resp.data !== 'string') {
+            throw new Error(`无法生成XML数据，返回类型为 ${typeof resp?.data}`);
+        }
+
+        const successResponse = new CustomEvent('pakku:deletedDanmakuResponse', {
+            detail: { data: resp.data }
+        });
+        window.dispatchEvent(successResponse);
+
+    } catch (e: any) {
+
+        const errorResponse = new CustomEvent('pakku:deletedDanmakuResponse', {
+            detail: { error: e.message }
+        });
+        window.dispatchEvent(errorResponse);
+    }
+}, false);
