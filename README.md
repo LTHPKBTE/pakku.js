@@ -1,3 +1,9 @@
+### 修改内容：新增一个接口以便获取删除弹幕列表
+使用例：使用用户脚本查看屏蔽词所屏蔽的弹幕列表，并能显示屏蔽词或正则匹配的部分以便修改屏蔽词和测试效果。
+[点击查看脚本样例](user.js)
+<img width="801" height="671" alt="图片" src="https://github.com/user-attachments/assets/ce728719-0027-419a-9cb3-ab731065ea0a" />
+
+
 [![Chrome Web Store - Version](https://img.shields.io/chrome-web-store/v/jklfcpboamajpiikgkbjcnnnnooefbhh.svg?style=flat-square)](https://chromewebstore.google.com/detail/pakku%EF%BC%9A%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E5%BC%B9%E5%B9%95%E8%BF%87%E6%BB%A4%E5%99%A8/jklfcpboamajpiikgkbjcnnnnooefbhh)
 [![Chrome Web Store - Rating](https://img.shields.io/chrome-web-store/rating/jklfcpboamajpiikgkbjcnnnnooefbhh.svg?style=flat-square)](https://chromewebstore.google.com/detail/pakku%EF%BC%9A%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E5%BC%B9%E5%B9%95%E8%BF%87%E6%BB%A4%E5%99%A8/jklfcpboamajpiikgkbjcnnnnooefbhh)
 /
