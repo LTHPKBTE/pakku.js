@@ -131,8 +131,8 @@ function extract_insight(s: string): HTMLButtonElement[] {
 
     // note that s may be prefixed or suffixed `₍₎` or `[]` by pakku
 
-    // jump to time (1:00:00), also include things like `7.30` because a few users do send danmus like this
-    for(let pattern_jump of s.matchAll(/(?:^|[^a-zA-Z0-9日号天])(\d+)(?:(?:[:：.]|小?时)([0-5][0-9]))?(?:[:：.]|分钟?)([0-5][0-9])(?:$|[^a-zA-Z0-9分千万亿倍个天日月年元米+:：.])/g)) {
+    // jump to time (1:00:00), also include things like `7.30` or `730工程` because some users do send danmus like this
+    for(let pattern_jump of s.matchAll(/(?:^|[^a-zA-Z0-9日号天])([1-9]\d?)(?:(?:[:：.]|小?时)([0-5][0-9]))?(?:[:：.]|分钟?)?([0-5][0-9])(?:$|[^a-zA-Z0-9分千万亿倍个天日月年元米+:：.])/g)) {
         let time_normalized = pattern_jump[2] ? `${pattern_jump[1]}:${pattern_jump[2]}:${pattern_jump[3]}` : `${pattern_jump[1]}:${pattern_jump[3]}`;
         let jump_s = parse_time(time_normalized, null);
         if(jump_s!==null) {
@@ -268,7 +268,7 @@ export function inject_panel(list_elem: HTMLElement, player_elem: HTMLElement, c
                     infos.push(d);
         }
 
-        console.log('pakku panel: show panel', infos, accurate_guess ? '(accurate)' : '(searched)');
+        console.debug('pakku panel: show panel', infos, accurate_guess ? '(accurate)' : '(searched)');
 
         function redraw_ui(idx: int) {
             if(idx < 0) idx += infos.length;
@@ -336,7 +336,7 @@ export function inject_panel(list_elem: HTMLElement, player_elem: HTMLElement, c
 
     if(window.panel_listener) {
         list_elem.removeEventListener('click', window.panel_listener);
-        console.log('pakku panel: removing previous hook listener');
+        console.debug('pakku panel: removing previous hook listener');
     }
     list_elem.addEventListener('click', window.panel_listener = function (e) {
         let dm_obj = e.target;
